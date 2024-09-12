@@ -1,5 +1,5 @@
 import React from "react";
-import links from "../video-links/links.json";
+import links from "../assets/video-links/links.json";
 import Nav from "./Nav";
 
 const Edit = () => (

@@ -1,57 +1,48 @@
 import React from "react";
-import { HashLink as Link } from "react-router-hash-link";
-import { useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import logo from "../assets/images/logo-black.png";
-import links from "../video-links/links.json";
+import links from "../assets/video-links/links.json";
 
 const Nav = () => {
-  const location = useLocation();
-  const currentPath = location.pathname.slice(1);
+  const currentPath = window.location.hash.slice(1);
+
+  const renderSubMenu = (category) => {
+    return links[category].map((video) => (
+      <div key={video.title} className="sub-menu">
+        <HashLink
+          to={`/${category}#${video.title}`}
+          className="menu-link nav-menu-link sub-link"
+        >
+          {video.title}
+        </HashLink>
+      </div>
+    ));
+  };
 
   return (
-    <div className="nav">
-      <Link to="/">
+    <nav className="nav">
+      <NavLink to="/">
         <img src={logo} alt="Bond Street logo" className="logo-nav" />
-      </Link>
+      </NavLink>
       <div className="menu nav-menu">
-        {["edit", "unit"].map((page) => (
-          <React.Fragment key={page}>
-            <Link to={`/${page}`} className="menu-link nav-menu-link">
-              <p className={currentPath === page ? "bold-title" : ""}>
-                {page.toUpperCase()}
+        {["edit", "unit"].map((category) => (
+          <React.Fragment key={category}>
+            <NavLink
+              to={`/${category}`}
+              className={({ isActive }) =>
+                `menu-link nav-menu-link${isActive ? " active" : ""}`
+              }
+            >
+              <p className={currentPath === `/${category}` ? "bold-title" : ""}>
+                {category.toUpperCase()}
               </p>
-            </Link>
-            {currentPath === page &&
-              links[page].map((video) => (
-                <div key={video.title} className="sub-menu">
-                  <Link
-                    to={`/${page}#${video.title}`}
-                    className="menu-link nav-menu-link sub-link"
-                  >
-                    {video.title}
-                  </Link>
-                </div>
-              ))}
+            </NavLink>
+            {currentPath === `/${category}` && renderSubMenu(category)}
           </React.Fragment>
         ))}
-
-        {/* mobile version of sub-menu */}
-        {["edit", "unit"].map(
-          (page) =>
-            currentPath === page &&
-            links[page].map((video) => (
-              <div key={video.title} className="sub-menu sub-menu-mobile">
-                <Link
-                  to={`/${page}#${video.title}`}
-                  className="menu-link nav-menu-link sub-link-mobile"
-                >
-                  {video.title}
-                </Link>
-              </div>
-            ))
-        )}
       </div>
-    </div>
+    </nav>
   );
 };
 
