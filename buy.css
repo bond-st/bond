@@ -65,13 +65,6 @@ input[type="radio"] {
 .selector-option input[type="radio"]:checked + label::after {
   transform: scaleX(1);
 }
-.sizing-guide {
-  text-decoration: underline;
-  cursor: pointer;
-  margin-top: 10px;
-  opacity: 0.4;
-  margin-bottom: 3rem;
-}
 
 .desktop-front-image {
   background-image: url("./front.png");
@@ -303,4 +296,14 @@ button:hover {
 .mobile-back-image {
   width: 50%;
   height: auto;
+}
+
+a {
+  display: block;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 10px;
+  color: white;
+  opacity: 0.33;
+  margin-bottom: 3rem;
 }
